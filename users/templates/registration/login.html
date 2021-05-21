@@ -24,6 +24,11 @@
 <!--              what's this?-->
               <input type="submit" class="btn btn-primary btn-sm" value="Login">
             </div>
+            <div>
+              <p>
+                Need an account? <a href="{% url 'django_registration_register' %}">Sign Up</a>
+              </p>
+            </div>
 <!--            what does this do?-->
             <input type="hidden" name="next" value="{{next}}">
           </form>

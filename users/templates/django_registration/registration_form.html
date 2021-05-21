@@ -9,9 +9,9 @@
       <p>Some information might be incorrect </p>
       {% endif %}
       <div class="panel panel-default">
-        <div class="panel-heading">
+        <!-- <div class="panel-heading">
           <h3 class="text-center">Sign Up</h3>
-        </div>
+        </div> -->
          <div class="panel-body">
 
           <form  action="/accounts/register/" method="post">
@@ -24,7 +24,11 @@
             <input type="hidden" name="next" value="{{next}}">
 
           </form>
-
+        </div>
+        <div>
+          <p>
+            Already have an account? <a href="{% url 'login' %}">Login</a>
+          </p>
         </div>
       </div>
     </div>
