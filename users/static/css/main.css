@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Cookie&family=Montserrat&display=swap');
+
+body {
+    margin:0;
+    padding:0;
+    font-family: 'Montserrat', sans-serif;
+    background: #efefef;
+}
+
+a {
+    color:#12c064;
+    text-decoration:none;
+}
+
+
+#header {
+    padding:10px 100px;
+    font-size:14px;
+    background: #fff;
+    color: black;
+    border-bottom: 1px solid #dad7d7;
+    overflow:auto;
+}
+
+#header .logo {
+    font-family: 'Cookie', cursive;
+    float:left;
+    color: black;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin-right:10%;
+}
+
