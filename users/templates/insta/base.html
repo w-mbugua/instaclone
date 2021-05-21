@@ -1,12 +1,18 @@
+{% load bootstrap5 %}
 {% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <title>{% block title %}{% endblock %}</title>
-    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+   {% block styles %}
+        {% bootstrap_css %}
+        <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+   {% endblock %}
   </head>
   <body>
     {% include 'navbar.html' %}
-    <div id="content">{% block content %} {% endblock %}</div>
+    <div id="content">
+        {% block content %} {% endblock %}
+    </div>
   </body>
 </html>
