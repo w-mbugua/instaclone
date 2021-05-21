@@ -1,0 +1,33 @@
+{% extends 'insta/base.html'%}
+{% load cloudinary %}
+{% block content %}
+
+<div class="container profile">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-xs-4 col-dm-3 col-md-2 col-lg-2">
+            {% cloudinary user.profile.photo class="rounded-circle prof-img" %}
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-xs-4 col-dm-4 col-md-4 col-lg-4">
+            <div class="row1">
+                <span class="username">{{ user.username }}</span>
+              
+                <button class="btn btn-outline-secondary" style="color: black;"><b>Edit Profile</b></button>
+            </div>
+            <div class="row2">
+                <span>90 posts</span>
+                <span>1200 followers</span>
+                <span>500 following</span>
+            </div>
+        </div>
+        <p></p>
+        <p></p>
+        <hr>
+    </div>
+</div>
+
+    <!-- FORM HERE -->
+    <!-- should open up in a different page -->
+
+{% endblock %}
