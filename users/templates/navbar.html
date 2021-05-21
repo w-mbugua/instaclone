@@ -22,7 +22,7 @@
               </div>
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link" href="#"><i class="fa fa-home"></i></a>
+                  <a class="nav-link" href="{% url 'home'%}"><i class="fa fa-home"></i></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">messenger</a>
@@ -34,7 +34,7 @@
                     <a class="nav-link" href="#">activity</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">profile</a>
+                    <a class="nav-link" href="{% url 'profile' %}">profile</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout'%}">Logout</a>
