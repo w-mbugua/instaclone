@@ -10,4 +10,4 @@ class ProfileUpdateForm(forms.ModelForm):
 class NewImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        exclude = ['profile', 'pub_date']
+        exclude = ['profile', 'pub_date', 'Likes', 'comments']

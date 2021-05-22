@@ -1,0 +1,50 @@
+{% extends 'insta/base.html'%}
+{% load cloudinary %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            {{ image.image_name }}
+            <div class="card mt-3">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                   {% cloudinary image.img class="home-display image-detail" %}
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ image.profile.username }}</h5>
+                      <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
+                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <hr>
+                      <!-- likes -->
+                      {% with total_likes=image.users_like.count %}
+                        <div class="image-info">
+                            <div>
+                                <span class="count">
+                                    {{ total_likes }} like{{ total_likes|pluralize }}
+                                </span>
+                            </div>
+                            {{ image.caption|linebreaks }}
+                            </div>
+                            <div class="image-likes">
+                                {% for user in image.users_like.all %}
+                                <div>
+                                    <img src="{{ user.profile.photo.url }}">
+                                    <p>{{ user.first_name }}</p>
+                                </div>
+                                {% empty %}
+                                <p>Nobody likes this image yet.</p>
+                                {% endfor %}
+                            </div>
+                        {% endwith %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

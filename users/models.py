@@ -16,12 +16,14 @@ class Image(models.Model):
     image_name = models.CharField(max_length=100)
     caption = models.CharField(max_length=100)
     profile = models.ForeignKey(User, on_delete=models.CASCADE)
-    Likes = models.ManyToManyField(User, related_name='image_like')
-    comments = models.ManyToManyField(User, related_name='comments')
+    Likes = models.ManyToManyField(User, related_name='images_liked', blank=True)
+    comments = models.ManyToManyField(User, related_name='comments', blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     img = CloudinaryField('image')
 
     def __str__(self):
         return self.image_name
+    
+    
 
 

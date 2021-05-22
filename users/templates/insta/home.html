@@ -10,7 +10,7 @@
                 <div class="card-header bg-transparent border-secondary">{{ image.profile.username }}</div>
                 <div class="card-body">
                   <!-- <h5 class="card-title">Success card title</h5> -->
-                  {% cloudinary image.img class="home-display" %}
+                 <a href="{% url 'show_image' image.id%}">{% cloudinary image.img class="home-display" %}</a>
                   <p class="card-text">Comments</p>
                 </div>
                 <div class="card-footer text-muted bg-transparent border-secondary">Add a comment</div>

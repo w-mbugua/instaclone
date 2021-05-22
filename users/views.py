@@ -3,7 +3,7 @@ from .forms import ProfileUpdateForm, NewImageForm
 from .models import Profile, Image
 
 def home(request):
-    images = Image.objects.all()
+    images = Image.objects.all().order_by('-id')
     return render(request, 'insta/home.html', {"images": images})
 
 def profile(request):
@@ -24,4 +24,8 @@ def upload(request):
     else:
         form = NewImageForm()
     return render(request, 'insta/upload.html', {"form": form})
+
+def show_image(request, id):
+    image = Image.objects.get(id = id)
+    return render(request, 'insta/image_details.html', {"image": image})
 
