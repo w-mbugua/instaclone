@@ -12,12 +12,14 @@ class Profile(models.Model):
         return f"{self.user.username} Profile"
 
 class Image(models.Model):
-    img = CloudinaryField('image')
+    
     image_name = models.CharField(max_length=100)
     caption = models.CharField(max_length=100)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(User, on_delete=models.CASCADE)
     Likes = models.ManyToManyField(User, related_name='image_like')
     comments = models.ManyToManyField(User, related_name='comments')
+    pub_date = models.DateTimeField(auto_now_add=True)
+    img = CloudinaryField('image')
 
     def __str__(self):
         return self.image_name

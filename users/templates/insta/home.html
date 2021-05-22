@@ -1,2 +1,22 @@
 {% extends 'insta/base.html'%}
 {% load cloudinary %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            {% for image in images %}
+            <div class="card border-secondary mt-3 mb-3">
+                <div class="card-header bg-transparent border-secondary">{{ image.profile.username }}</div>
+                <div class="card-body">
+                  <!-- <h5 class="card-title">Success card title</h5> -->
+                  {% cloudinary image.img class="home-display" %}
+                  <p class="card-text">Comments</p>
+                </div>
+                <div class="card-footer text-muted bg-transparent border-secondary">Add a comment</div>
+              </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
