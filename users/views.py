@@ -1,16 +1,26 @@
+from json.encoder import JSONEncoder
 from django.shortcuts import render, redirect
-from .forms import ProfileUpdateForm, NewImageForm
-from .models import Profile, Image
+from .forms import ProfileUpdateForm, NewImageForm, CommentModelForm
+from .models import Profile, Image, Like, Comment
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     images = Image.objects.all().order_by('-id')
-    return render(request, 'insta/home.html', {"images": images})
+    current_user = request.user
+     
+    return render(request, 'insta/home.html', {"images": images, "c_form": form})
 
 def profile(request):
-    return render(request, 'insta/profile.html')
+    profile = Profile.objects.get(user=request.user)
+    return render(request, 'insta/profile.html', {"profile": profile})
 
 def update_profile(request):
-    return
+    form = ProfileUpdateForm(request.POST, request.FILES)
+
+    return render(request, 'insta/update_profile.html', {"form": form})
 
 def upload(request):
     current_user = request.user
@@ -27,5 +37,7 @@ def upload(request):
 
 def show_image(request, id):
     image = Image.objects.get(id = id)
-    return render(request, 'insta/image_details.html', {"image": image})
+    profile = Profile.objects.get(user=request.user)
+    return render(request, 'insta/image_details.html', {"image": image, "profile":profile})
+
 

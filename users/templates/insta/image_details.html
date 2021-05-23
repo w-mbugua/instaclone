@@ -1,7 +1,7 @@
 {% extends 'insta/base.html'%}
 {% load cloudinary %}
 {% block content %}
-
+{% load static %}
 <div class="container">
     <div class="row">
         <div class="col-md-2"></div>
@@ -19,26 +19,7 @@
                       <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                       <hr>
                       <!-- likes -->
-                      {% with total_likes=image.users_like.count %}
-                        <div class="image-info">
-                            <div>
-                                <span class="count">
-                                    {{ total_likes }} like{{ total_likes|pluralize }}
-                                </span>
-                            </div>
-                            {{ image.caption|linebreaks }}
-                            </div>
-                            <div class="image-likes">
-                                {% for user in image.users_like.all %}
-                                <div>
-                                    <img src="{{ user.profile.photo.url }}">
-                                    <p>{{ user.first_name }}</p>
-                                </div>
-                                {% empty %}
-                                <p>Nobody likes this image yet.</p>
-                                {% endfor %}
-                            </div>
-                        {% endwith %}
+                        <p> <span>{{ image.count_likes }}</span> likes</p>
                     </div>
                   </div>
                 </div>
@@ -47,4 +28,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block scripts %} {{block.super}}
+    <script type="text/javascript" src="{% static 'js/details.js'%}">
+    </script>
 {% endblock %}

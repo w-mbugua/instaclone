@@ -1,5 +1,6 @@
 {% extends 'insta/base.html'%}
 {% load cloudinary %}
+{% load bootstrap5 %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -7,16 +8,33 @@
         <div class="col-md-7">
             {% for image in images %}
             <div class="card border-secondary mt-3 mb-3">
-                <div class="card-header bg-transparent border-secondary">{{ image.profile.username }}</div>
+                <div class="card-header bg-transparent border-secondary">
+                 <!-- here -->
+
+                </div>
                 <div class="card-body">
                   <!-- <h5 class="card-title">Success card title</h5> -->
                  <a href="{% url 'show_image' image.id%}">{% cloudinary image.img class="home-display" %}</a>
                   <p class="card-text">Comments</p>
+                 
+
                 </div>
-                <div class="card-footer text-muted bg-transparent border-secondary">Add a comment</div>
+                <div class="card-footer text-muted bg-transparent border-secondary">
+                 
+                  
+                </div>
               </div>
             {% endfor %}
         </div>
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+
+  <script>
+    $(document).ready(function(){
+      console.log("working!!")
+    })
+    
+  </script>
 {% endblock %}

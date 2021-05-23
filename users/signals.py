@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from .models import Profile
+from .models import Profile, Relationship
 
 
 @receiver(post_save, sender=User)
@@ -12,5 +12,15 @@ def make_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+@receiver(post_save, sender=Relationship)
+def profile_add_friends(sender, instance, created, **kwargs):
+    sender_ = instance.sender
+    receiver_ = instance.receiver
+    if instance.status == 'accepted':
+        sender_.friends.add(receiver_.user)
+        receiver_.friends.add(sender_.user)
+        sender_.save()
+        receiver_.save()
     
 

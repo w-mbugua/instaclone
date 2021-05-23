@@ -17,17 +17,27 @@
             <div class="row1">
                 <span class="username">{{ user.username }}</span>
               
-                <button class="btn btn-outline-secondary" style="color: black;"><b>Edit Profile</b></button>
+                <a href="{% url 'update_profile'%}"><button class="btn btn-outline-secondary" style="color: black;"><b>Edit Profile</b></button></a>
             </div>
             <div class="row2">
-                <span>90 posts</span>
-                <span>1200 followers</span>
+                <span>{{ profile.get_images.count }} posts</span>
+                <span>{{ profile.get_friends.count }} friends</span>
                 <span>500 following</span>
             </div>
         </div>
         <p></p>
         <p></p>
         <hr>
+        <h3>Your Friends:</h3>
+        <ul>
+            {% for friend in profile.get_friends %}
+            <li>{{ friend }}</li>
+            {% endfor %}
+        </ul>
+        <hr>
+        {% for image in profile.get_images %}
+        {% cloudinary image.img class="owner-img" %}
+        {% endfor %}
     </div>
 </div>
 
