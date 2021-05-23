@@ -10,7 +10,7 @@
             <div class="card border-secondary mt-3 mb-3">
                 <div class="card-header bg-transparent border-secondary">
                  <!-- here -->
-                 {{ image.profile.user }}
+                <a href="#"> {{ image.profile.user }}</a>
                  <form action="{% url 'like'%}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="image_id" value="{{image.id}}">

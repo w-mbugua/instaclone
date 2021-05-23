@@ -83,3 +83,4 @@ def image_like(request):
         image_obj.save()
         like.save()
     return redirect('home')
+

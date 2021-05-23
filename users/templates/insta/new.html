@@ -1,0 +1,40 @@
+ <!-- Modal -->
+ <div class="modal fade" id="photoModal{{ image.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ image.image_name }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- body -->
+        <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        {% cloudinary image.img class="owner-img" %}
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Description</h3> <br>
+                        <p>
+                            {{ image.caption }}
+                            
+                            <small class="text-muted">Posted {{ image.pub_date }}</small>
+                        </p>
+                        {% if photo.location != None %}
+                        <p><i class="fa fa-map-marker"></i>{{ photo.location }}</p>
+                        {% endif %}
+                        <!-- <input class="btn btn-outline-success" value="Copy Image Link" name='copy'> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+                    
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- end of modal -->

@@ -18,6 +18,8 @@ class Profile(models.Model):
     def get_images(self):
         return self.images.all()   # count() to count how many
 
+    
+
 class Image(models.Model):
     
     image_name = models.CharField(max_length=100)
