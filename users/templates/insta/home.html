@@ -10,7 +10,19 @@
             <div class="card border-secondary mt-3 mb-3">
                 <div class="card-header bg-transparent border-secondary">
                  <!-- here -->
-
+                 {{ image.profile.user }}
+                 <form action="{% url 'like'%}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="image_id" value="{{image.id}}">
+                    <button type="submit" class="btn btn-outline-primary">
+                      {% if user not in image.Likes.all %}
+                      Like
+                      {% else %}
+                      Unlike
+                      {% endif %}
+                    </button>
+                    &nbsp; {{image.count_likes}}
+                 </form>
                 </div>
                 <div class="card-body">
                   <!-- <h5 class="card-title">Success card title</h5> -->
@@ -20,8 +32,13 @@
 
                 </div>
                 <div class="card-footer text-muted bg-transparent border-secondary">
-                 
-                  
+                  <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="image_id" value={{image.id}}>
+                    {% bootstrap_form c_form %}
+                    <button class="btn btn-outline-secondary">Comment</button>
+                  </form>
+
                 </div>
               </div>
             {% endfor %}
