@@ -35,12 +35,7 @@
                     {% endif%}
                 </div>
                 <div class="card-footer text-muted bg-transparent border-secondary">
-                  <form action="" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="image_id" value={{image.id}}>
-                    {% bootstrap_form c_form %}
-                    <button class="btn btn-outline-secondary">Comment</button>
-                  </form>
+                
 
                 </div>
               </div>

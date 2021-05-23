@@ -35,9 +35,11 @@
             {% endfor %}
         </ul>
         <hr>
+       <div class="prof-display">
         {% for image in profile.get_images %}
         {% cloudinary image.img class="owner-img" %}
         {% endfor %}
+       </div>
     </div>
 </div>
 

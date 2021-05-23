@@ -1,25 +1,44 @@
 {% extends 'insta/base.html'%}
-{% load cloudinary %}
-{% block content %}
+{% load bootstrap5 %}
 {% load static %}
+{% load cloudinary %}
+
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-6">
             {{ image.image_name }}
-            <div class="card mt-3">
+            <div class="card mt-3" style="height: 500px; width: 800px;">
                 <div class="row g-0">
-                  <div class="col-md-4">
-                   {% cloudinary image.img class="home-display image-detail" %}
+                  <div class="col-md-7">
+                   {% cloudinary image.img class="image-detail" %}
                   </div>
-                  <div class="col-md-8">
+            
+                  <div class="col-md-5">
                     <div class="card-body">
-                      <h5 class="card-title">{{ image.profile.username }}</h5>
-                      <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      <h5 class="card-title">{{ image.profile.user }}</h5>
+                      <p class="card-text"><small class="text-muted">{{ image.caption }}</small></p>
+                      <p class="card-text"><small class="text-muted">{{ image.pub_date|timesince }} ago</small></p>
                       <hr>
                       <!-- likes -->
                         <p> <span>{{ image.count_likes }}</span> likes</p>
+                    </div>
+                    <button class="btn btn-togg btn-outline-primary" onclick="toggleComments()">See all comments</button>
+                    <div id="comments-box">
+                        {% if image.comment_set.all %}
+                        {% for comment in image.comment_set.all %}
+                          <p>{{ comment.body }}</p>
+                        {% endfor %}
+                      {% endif%}
+                    </div>
+                    <div class="footer">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="image_id" value={{image.id}}>
+                            {% bootstrap_form form %}
+                            <button class="btn btn-outline-secondary">Comment</button>
+                          </form>
                     </div>
                   </div>
                 </div>
