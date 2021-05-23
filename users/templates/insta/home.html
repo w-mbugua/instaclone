@@ -28,8 +28,11 @@
                   <!-- <h5 class="card-title">Success card title</h5> -->
                  <a href="{% url 'show_image' image.id%}">{% cloudinary image.img class="home-display" %}</a>
                   <p class="card-text">Comments</p>
-                 
-
+                    {% if image.comment_set.all %}
+                      {% for comment in image.comment_set.all %}
+                        <p>{{ comment.body }}</p>
+                      {% endfor %}
+                    {% endif%}
                 </div>
                 <div class="card-footer text-muted bg-transparent border-secondary">
                   <form action="" method="POST">
