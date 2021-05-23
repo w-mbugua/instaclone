@@ -10,7 +10,15 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     images = Image.objects.all().order_by('-id')
     current_user = request.user
-     
+    form = CommentModelForm(request.POST) 
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.user = current_user
+        image_id = request.POST.get('image_id')
+        comment.image = Image.objects.get(id = image_id)
+        comment.save()
+        form = CommentModelForm() 
+
     return render(request, 'insta/home.html', {"images": images, "c_form": form})
 
 def profile(request):
