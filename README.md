@@ -1,4 +1,4 @@
-# ![instaApp]()
+# ![instaApp](https://github.com/JoyMbugua/instaclone/blob/master/staticfiles/img/insta-app.png)
 
 # instaApp
 
@@ -12,7 +12,7 @@
 
 ## Demo
 
-Here is a working live demo : 
+Here is a working live demo : <https://insta-jm.herokuapp.com/>
 
 ## Mobile support
 
