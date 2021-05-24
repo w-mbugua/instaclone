@@ -19,8 +19,8 @@
                     <div class="card-body">
                         <div class="image-header">
                            <div class="image-header-image">
-                            {% if user.profile.photo %}
-                            {% cloudinary user.profile.photo class="rounded-circle thumb-img" %}
+                            {% if image.profile.photo %}
+                            {% cloudinary image.profile.photo class="rounded-circle thumb-img" %}
                             {% else %}
                             <img style="padding-top: 10px;" class="rounded-circle thumb-img" src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300?k=6&m=1214428300&s=612x612&w=0&h=rvt5KGND3z8kfrHELplF9zmr8d6COZQ-1vYK9mvSxnc=" alt="">
                             {% endif %}
@@ -32,8 +32,8 @@
                         <hr>
                         <div class="caption">
                             <div class="image-header-image">
-                                {% if user.profile.photo %}
-                                {% cloudinary user.profile.photo class="rounded-circle thumb-img" %}
+                                {% if image.profile.photo %}
+                                {% cloudinary image.profile.photo class="rounded-circle thumb-img" %}
                                 {% else %}
                                 <img style="padding-top: 10px;" class="rounded-circle thumb-img" src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300?k=6&m=1214428300&s=612x612&w=0&h=rvt5KGND3z8kfrHELplF9zmr8d6COZQ-1vYK9mvSxnc=" alt="">
                                 {% endif %}
@@ -51,13 +51,13 @@
                         {% for comment in image.comment_set.all %}
                          <div style="display: flex;">
                             <div class="image-header-image">
-                                {% if user.profile.photo %}
-                                {% cloudinary user.profile.photo class="rounded-circle thumb-img" %}
+                                {% if image.profile.photo %}
+                                {% cloudinary image.profile.photo class="rounded-circle thumb-img" %}
                                 {% else %}
                                 <img style="padding-top: 10px;" class="rounded-circle thumb-img" src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300?k=6&m=1214428300&s=612x612&w=0&h=rvt5KGND3z8kfrHELplF9zmr8d6COZQ-1vYK9mvSxnc=" alt="">
                                 {% endif %}
                                </div>
-                             <div class="comment-body">
+                             <div style="padding-left: 5px;" class="comment-body">
                                 <p><b>{{comment.user}}</b> {{ comment.body }}</p>
                                 <p><small class="text-muted">{{ comment.created|timesince}} ago</small></p>
                              </div>
@@ -66,7 +66,7 @@
                       {% endif%}
                     </div>
                     <hr>
-                    <div>
+                    <div class="icons">
                         <div class="icons">
 
                             <div class="likes">

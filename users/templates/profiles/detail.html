@@ -8,8 +8,8 @@
        <div class="row">
            <!-- avatar -->
            <div class="col-xs-4 col-dm-3 col-md-2 col-lg-2">
-            {% if object.profile.photo %}
-            {% cloudinary object.profile.photo class="rounded-circle prof-img" %}
+            {% if object.photo %}
+            {% cloudinary object.photo class="rounded-circle prof-img" %}
             {% else %}
             <img style="padding-top: 10px;" class="rounded-circle prof-img" src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300?k=6&m=1214428300&s=612x612&w=0&h=rvt5KGND3z8kfrHELplF9zmr8d6COZQ-1vYK9mvSxnc=" alt="">
             {% endif %}
@@ -18,7 +18,6 @@
            <div class="col-md-4">
                <div class="row2">
                 {{object.user}}
-                {{object.user.email}}
               
                 <!-- details -->
                 

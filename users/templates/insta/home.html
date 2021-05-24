@@ -66,16 +66,41 @@
         <div class="col-md-4">
           <br>
           <a href="{% url 'newprofile' %}">
-            <button class="btn btn-primary">People to follow</button>
+            <h3>People to follow</h3>
+            <hr>
           </a>
-          <br>
-          <br>
-          Following:
           <ul>
-              {% for p in profile.following.all %}
-                <li>{{p}}</li>
-              {% endfor %}
+            {% for person in suggestions %}
+           <div style="display: flex;" class="tofollow mb-3 mt-3">
+            <li>
+              {{person.user}}
+            </li>
+            <li></li>
+            <li style="padding-left: 10px;">
+              <a href="{% url 'newprofile-detail' person.pk%}">
+                <button class="btn btn-sm btn-primary">See Profile</button>
+            </a>
+            </li>
+            
+           </div>
+            {% endfor %}
           </ul>
+          <br>
+          <br>
+         
+          <!-- <ul>
+            <li><b>Following:</b></li>
+              {% for p in profile.following.all %}
+                <div style="display: flex;">
+                  <li>{{p}}</li>
+                  <li style="padding-left: 10px;">
+                    <a href="{% url 'newprofile-detail' p.pk%}">
+                      <button class="btn btn-sm btn-primary">See Profile</button>
+                  </a>
+                  </li>
+                </div>
+              {% endfor %}
+          </ul> -->
         </div>
        
     </div>

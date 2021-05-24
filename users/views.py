@@ -8,26 +8,21 @@ from .email import send_confirm_email
 
 @login_required
 def home(request):
-     # get logged in user profile
     profile = Profile.objects.get(user=request.user)
-
+    suggestions = Profile.objects.all()
     # check who we are following
     users = [user for user in profile.following.all()]
-
-    # initial values for vars
     images = []
-    qs = None
 
     # get the posts of people we are following
     for u in users:
         p = Profile.objects.get(user=u)
         p_images = p.images.all()
         images.append(p_images)
-    
-    # our posts
+
     my_posts = profile.profile_images()
     images.append(my_posts)
-    return render(request, 'insta/home.html', {'profile': profile, 'images': images})
+    return render(request, 'insta/home.html', {'profile': profile, 'images': images, 'suggestions': suggestions})
 
 @login_required
 def profile(request):
@@ -75,7 +70,6 @@ def show_image(request, id):
 
 @login_required
 def image_like(request):
-
     user = request.user
     if request.method == 'POST':
         image_id = request.POST.get('image_id')
