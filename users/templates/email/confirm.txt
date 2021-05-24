@@ -1,0 +1,2 @@
+Hello {{name}},
+Thank you for signing up on instaclone! Hope you'll have fun!

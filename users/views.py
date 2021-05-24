@@ -1,6 +1,6 @@
 from json.encoder import JSONEncoder
 from django.core.exceptions import ObjectDoesNotExist
-from django.http.response import Http404
+from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .forms import ProfileUpdateForm, NewImageForm, CommentModelForm
 from .models import Profile, Image, Like, Comment
@@ -8,8 +8,9 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
-from itertools import chain
+from .email import send_confirm_email
 
+@login_required
 def home(request):
      # get logged in user profile
     profile = Profile.objects.get(user=request.user)
@@ -152,25 +153,9 @@ class ProfileDetailView(DetailView):
         context['follow'] = follow
         return context
 
-def stream(request):
-    # get logged in user profile
-    profile = Profile.objects.get(user=request.user)
+def confirmation(request):
+    user = request.user
+    email = user.email
+    send_confirm_email(user, email)
+    HttpResponseRedirect('login')
 
-    # check who we are following
-    users = [user for user in profile.following.all()]
-
-    # initial values for vars
-    images = []
-    qs = None
-
-    # get the posts of people we are following
-    for u in users:
-        p = Profile.objects.get(user=u)
-        p_images = p.images.all()
-        images.append(p_images)
-    
-    # our posts
-    my_posts = profile.profile_images()
-    images.append(my_posts)
-
-    return render(request, 'insta/newhome.html', {'profile': profile, 'images': images})

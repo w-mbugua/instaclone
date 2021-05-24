@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, profile, upload, show_image, image_like, update_profile, search_results, ProfileListView, ProfileDetailView, follow_unfollow, stream
+from .views import home, profile, upload, show_image, image_like, update_profile, search_results, ProfileListView, ProfileDetailView, follow_unfollow, confirmation
 
 urlpatterns = [
     path('', home, name='home'),
@@ -12,5 +12,6 @@ urlpatterns = [
     path('profilenew/', ProfileListView.as_view(), name="newprofile"),
     path('profilenew/<pk>/', ProfileDetailView.as_view(), name="newprofile-detail"),
     path('switch_follow/', follow_unfollow, name="follow-unfollow-view"),
-    path('newhome/', stream, name="newhome"),
+    path('confirm/', confirmation, name='mailconfirm'),
+    # path('newhome/', stream, name="newhome"),
 ]
