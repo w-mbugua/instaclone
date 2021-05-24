@@ -8,17 +8,28 @@ class Profile(models.Model):
     bio = models.CharField(max_length=300)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     friends = models.ManyToManyField(User, blank=True, related_name='friends')
+    following = models.ManyToManyField(User, blank=True, related_name='following')
+    created = models.DateTimeField(auto_now_add=True)
+    
+
+    def profile_images(self):
+        return self.images.all()
 
     def __str__(self):
         return f"{self.user.username} Profile"
 
-    def get_friends(self):
-        return self.friends.all()
     
     def get_images(self):
-        return self.images.all()   # count() to count how many
+        return self.images.all()   
 
+    @classmethod
+    def get_profile_by_name(cls, username):
+        profile = cls.objects.filter(user__username = username)
+        return profile
     
+    class Meta:
+        ordering = ('-created',)
+
 
 class Image(models.Model):
     
@@ -37,6 +48,12 @@ class Image(models.Model):
     
     def count_comments(self):
         return self.comment_set.all().count()
+    
+    @classmethod
+    def search_by_term(cls, search_term):
+        image = cls.objects.filter(image_name__icontains=search_term)
+        return image
+
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -47,7 +64,9 @@ class Comment(models.Model):
 
 
     def __str__(self):
-        return str(self.pk)
+        return str(self.body[:20])
+
+
 
 LIKE_CHOICES = (
     ('Like', 'Like'),
@@ -63,20 +82,6 @@ class Like(models.Model):
     def __str__(self):
         return f"{self.user}-{self.image}-{self.value}"
 
-STATUS_CHOICES = (
-('send', 'send'),
-('accepted', 'accepted')
-)
-
-class Relationship(models.Model):
-    sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sender')
-    receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='receiver')
-    status = models.CharField(max_length=8, choices=STATUS_CHOICES)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.sender}-{self.receiver}-{self.status}"
 
 
 

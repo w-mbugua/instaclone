@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-6">
-            {{ image.image_name }}
-            <div class="card mt-3" style="height: 500px; width: 800px;">
+           
+            <div class="card mt-3" style="min-height: 500px; min-width: 800px;">
                 <div class="row g-0">
                   <div class="col-md-7">
                    {% cloudinary image.img class="image-detail" %}
@@ -17,27 +17,65 @@
             
                   <div class="col-md-5">
                     <div class="card-body">
-                      <h5 class="card-title">{{ image.profile.user }}</h5>
-                      <p class="card-text"><small class="text-muted">{{ image.caption }}</small></p>
-                      <p class="card-text"><small class="text-muted">{{ image.pub_date|timesince }} ago</small></p>
-                      <hr>
-                      <!-- likes -->
-                        <p> <span>{{ image.count_likes }}</span> likes</p>
+                        <div class="image-header">
+                           <div class="image-header-image">
+                            {% if user.profile.photo %}
+                            {% cloudinary user.profile.photo class="rounded-circle thumb-img" %}
+                            {% else %}
+                            <img style="padding-top: 10px;" class="rounded-circle thumb-img" src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300?k=6&m=1214428300&s=612x612&w=0&h=rvt5KGND3z8kfrHELplF9zmr8d6COZQ-1vYK9mvSxnc=" alt="">
+                            {% endif %}
+                           </div>
+                            <div class="image-header-name">
+                                <h5 class="card-title">{{ image.profile.user }}</h5>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="caption">
+                            <div class="image-header-image">
+                                {% if user.profile.photo %}
+                                {% cloudinary user.profile.photo class="rounded-circle thumb-img" %}
+                                {% else %}
+                                <img style="padding-top: 10px;" class="rounded-circle thumb-img" src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300?k=6&m=1214428300&s=612x612&w=0&h=rvt5KGND3z8kfrHELplF9zmr8d6COZQ-1vYK9mvSxnc=" alt="">
+                                {% endif %}
+                               </div>
+                               <div class="caption-text">
+                                <p class="card-text">{{ image.caption }}</p>
+                                <p class="card-text"><small class="text-muted">{{ image.pub_date|timesince }} ago</small></p>
+                               </div>
+                        </div>
                     </div>
-                    <button class="btn btn-togg btn-outline-primary" onclick="toggleComments()">See all comments</button>
+                  
                     <div id="comments-box">
+                        <h5>Comments</h5>
                         {% if image.comment_set.all %}
                         {% for comment in image.comment_set.all %}
-                          <p>{{ comment.body }}</p>
+                         <div style="display: flex;">
+                            <div class="image-header-image">
+                                {% if user.profile.photo %}
+                                {% cloudinary user.profile.photo class="rounded-circle thumb-img" %}
+                                {% else %}
+                                <img style="padding-top: 10px;" class="rounded-circle thumb-img" src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300?k=6&m=1214428300&s=612x612&w=0&h=rvt5KGND3z8kfrHELplF9zmr8d6COZQ-1vYK9mvSxnc=" alt="">
+                                {% endif %}
+                               </div>
+                             <div class="comment-body">
+                                <p><b>{{comment.user}}</b> {{ comment.body }}</p>
+                                <p><small class="text-muted">{{ comment.created|timesince}} ago</small></p>
+                             </div>
+                         </div>
                         {% endfor %}
                       {% endif%}
+                    </div>
+                    <hr>
+                    <div class="icons">
+                         <!-- likes -->
+                         <p> <span>{{ image.count_likes }}</span> likes</p>
                     </div>
                     <div class="footer">
                         <form action="" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="image_id" value={{image.id}}>
                             {% bootstrap_form form %}
-                            <button class="btn btn-outline-secondary">Comment</button>
+                            <!-- <button class="btn btn-outline-secondary">Comment</button> -->
                           </form>
                     </div>
                   </div>

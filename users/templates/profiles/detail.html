@@ -1,0 +1,96 @@
+{% extends 'insta/base.html'%}
+{% load cloudinary %}
+
+
+{% block content %}
+<!-- modal -->
+   <div class="container">
+       <div class="row">
+           <!-- avatar -->
+           <div class="col-xs-4 col-dm-3 col-md-2 col-lg-2">
+            {% if object.profile.photo %}
+            {% cloudinary object.profile.photo class="rounded-circle prof-img" %}
+            {% else %}
+            <img style="padding-top: 10px;" class="rounded-circle prof-img" src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300?k=6&m=1214428300&s=612x612&w=0&h=rvt5KGND3z8kfrHELplF9zmr8d6COZQ-1vYK9mvSxnc=" alt="">
+            {% endif %}
+        </div>
+
+           <div class="col-md-4">
+               <div class="row2">
+                {{object.user}}
+              
+                <!-- details -->
+                
+                {% if follow %}
+                 <form action="{% url 'follow-unfollow-view'%}" method="POST">
+                     {% csrf_token %}
+                     <input type="hidden" name="profile_pk" value={{object.pk}}>
+                     <button type="submit" class="btn btn-danger">Unfollow</button>
+                 </form>
+                 {% else %}
+                 <form action="{% url 'follow-unfollow-view'%}" method="POST">
+                     {% csrf_token %}
+                     <input type="hidden" name="profile_pk" value={{object.pk}}>
+                     <button type="submit" class="btn btn-success">Follow</button>
+                 </form>
+                {% endif %}
+               </div>
+               <div class="row2">
+                <span>{{ profile.get_images.count }} posts</span>
+                <span>{{ profile.following.count }} following</span>
+                <!-- <span>0 followers</span> -->
+            </div>
+               <hr>
+           </div>
+       </div>
+       <div class="row">
+      
+            <div class="prof-display">
+                {% for image in object.profile_images %}
+                <div data-bs-toggle="modal" data-bs-target="#imgModal{{image.id}}">
+                    {% cloudinary image.img class="owner-img" %}
+                </div>
+                <!-- modal -->
+                <div class="modal fade" id="imgModal{{image.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{image.image_name}}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        {% cloudinary image.img class="image-detail" %}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h3>{{ image.profile.user }}</h3> <br>
+                                        <p>
+                                            {{ image.caption }}
+                                        </p>
+                                        <small class="text-muted">{{ image.pub_date|timesince }} ago</small>
+                                        <!-- comments -->
+                                        {% if image.comment_set.all %}
+                                        {% for comment in image.comment_set.all %}
+                                        <p>{{ comment.body }}</p>
+                                        {% endfor %}
+                                        {% endif%}
+        
+                                        <!-- <input class="btn btn-outline-success" value="Copy Image Link" name='copy'> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                       
+                        </div>
+                    </div>
+                    </div>
+                </div>     
+            {% endfor %}
+            </div>
+       </div>
+   </div>
+{% endblock %}

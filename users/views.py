@@ -1,17 +1,36 @@
 from json.encoder import JSONEncoder
+from django.core.exceptions import ObjectDoesNotExist
+from django.http.response import Http404
 from django.shortcuts import render, redirect
 from .forms import ProfileUpdateForm, NewImageForm, CommentModelForm
 from .models import Profile, Image, Like, Comment
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-
+from django.views.generic import ListView, DetailView
+from itertools import chain
 
 def home(request):
-    images = Image.objects.all().order_by('-id')
-    current_user = request.user
+     # get logged in user profile
+    profile = Profile.objects.get(user=request.user)
+
+    # check who we are following
+    users = [user for user in profile.following.all()]
+
+    # initial values for vars
+    images = []
+    qs = None
+
+    # get the posts of people we are following
+    for u in users:
+        p = Profile.objects.get(user=u)
+        p_images = p.images.all()
+        images.append(p_images)
     
-    return render(request, 'insta/home.html', {"images": images})
+    # our posts
+    my_posts = profile.profile_images()
+    images.append(my_posts)
+    return render(request, 'insta/home.html', {'profile': profile, 'images': images})
 
 
 def profile(request):
@@ -51,14 +70,13 @@ def show_image(request, id):
             comment.image = Image.objects.get(id=image_id)
             comment.save()
             form = CommentModelForm()
-            return redirect('home')
+            return redirect('show_image', image.id)
     else:
         form = CommentModelForm()
     return render(request, 'insta/image_details.html', {"image": image, "profile": profile, "form": form})
 
 
 @login_required
-@require_POST
 def image_like(request):
 
     user = request.user
@@ -84,3 +102,75 @@ def image_like(request):
         like.save()
     return redirect('home')
 
+
+def search_results(request):
+    keyword = request.GET.get('image')
+    images = Image.search_by_term(keyword)
+    message = f"{keyword}".capitalize()
+    return render(request, 'insta/search.html', {"message": message, "images": images})
+
+def follow_unfollow(request):
+    if request.method == 'POST':
+        my_profile = Profile.objects.get(user=request.user)
+        pk = request.POST.get('profile_pk')
+        obj = Profile.objects.get(pk=pk)
+
+        if obj.user in my_profile.following.all():
+            my_profile.following.remove(obj.user)
+        else:
+            my_profile.following.add(obj.user)
+        return redirect(request.META.get('HTTP_REFERER'))
+    return redirect('newprofile')
+
+
+class ProfileListView(ListView):
+    model = Profile
+    template_name = 'profiles/peoplelist.html'
+    context_object_name = 'profiles'
+
+    def get_queryset(self):
+        return Profile.objects.all().exclude(user=self.request.user)
+
+class ProfileDetailView(DetailView):
+    model = Profile
+    template_name = 'profiles/detail.html'
+
+    def get_object(self, **kwargs):
+        pk = self.kwargs.get('pk')
+        view_profile = Profile.objects.get(pk=pk)
+        return view_profile
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        view_profile = self.get_object()
+        my_profile = Profile.objects.get(user=self.request.user)
+
+        if view_profile.user in my_profile.following.all():
+            follow = True
+        else:
+            follow = False
+        context['follow'] = follow
+        return context
+
+def stream(request):
+    # get logged in user profile
+    profile = Profile.objects.get(user=request.user)
+
+    # check who we are following
+    users = [user for user in profile.following.all()]
+
+    # initial values for vars
+    images = []
+    qs = None
+
+    # get the posts of people we are following
+    for u in users:
+        p = Profile.objects.get(user=u)
+        p_images = p.images.all()
+        images.append(p_images)
+    
+    # our posts
+    my_posts = profile.profile_images()
+    images.append(my_posts)
+
+    return render(request, 'insta/newhome.html', {'profile': profile, 'images': images})

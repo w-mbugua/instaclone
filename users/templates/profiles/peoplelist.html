@@ -1,0 +1,27 @@
+{% extends 'insta/base.html'%}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="cold-md-3">
+
+            </div>
+            <div class="col-md-6">
+                <div class="peoplelist">
+                    {% for profile in profiles %}
+                       <div style="display: flex; padding: 20px;" class="person-to-follow">
+                        <div>
+                            {{ profile.user|title }}
+                        </div>
+                        <div class="ms-3">
+                            <a href="{% url 'newprofile-detail' profile.pk%}">
+                                <button class="btn btn-sm btn-primary">See Profile</button>
+                            </a>
+                        </div>
+                       </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

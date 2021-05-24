@@ -1,0 +1,55 @@
+{% extends 'insta/base.html'%}
+{% load bootstrap5 %}
+{% load cloudinary %}
+
+{% block content %}
+<div class="prof-display">
+    {% for image in images %}
+    <div data-bs-toggle="modal" data-bs-target="#imgModal{{image.id}}">
+        {% cloudinary image.img class="owner-img" %}
+    </div>
+        <!-- Modal -->
+    <div class="modal fade" id="imgModal{{image.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{image.image_name}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            {% cloudinary image.img class="image-detail" %}
+                        </div>
+                        <div class="col-md-4">
+                            <h3>{{ image.profile.user }}</h3> <br>
+                            <p>
+                                {{ image.caption }}
+                                
+                                <small class="text-muted">{{ image.pub_date|timesince }} ago</small>
+                            </p>
+                            <!-- comments -->
+                            {% if image.comment_set.all %}
+                            {% for comment in image.comment_set.all %}
+                            <p>{{ comment.body }}</p>
+                            {% endfor %}
+                            {% endif%}
+
+                            <!-- <input class="btn btn-outline-success" value="Copy Image Link" name='copy'> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div>       
+    {% endfor %}
+   </div>
+</div>
+</div>
+{% endblock %}

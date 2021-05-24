@@ -35,6 +35,24 @@ a {
 .prof-img {
     width: 100%;
 }
+.thumb-img {
+    height: 30px;
+    width: 30px;
+}
+.image-header {
+    display: flex;
+    
+}
+.image-header-name{
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+.caption {
+    display: flex;
+}
+.caption-text {
+    margin-left: 1rem;
+}
 .row1, .row2 {
     display: flex;
     align-items: center;
@@ -72,5 +90,16 @@ a {
 .image-detail {
 
     max-width: 100%;
-    height: 500px;
+    /* height: 100%; */
+    object-fit: contain;
+}
+.empty {
+    color: pink;
+
+}
+.full {
+    color: red;
+}
+.icons {
+    display: flex;
 }

@@ -8,6 +8,7 @@
 <div class="container profile">
     <div class="row">
         <div class="col-md-2"></div>
+        <!-- profile image -->
         <div class="col-xs-4 col-dm-3 col-md-2 col-lg-2">
             {% if user.profile.photo %}
             {% cloudinary user.profile.photo class="rounded-circle prof-img" %}
@@ -16,28 +17,28 @@
             {% endif %}
         </div>
         <div class="col-md-1"></div>
+        <!-- deatil section -->
         <div class="col-xs-4 col-dm-4 col-md-4 col-lg-4">
             <div class="row1">
                 <span class="username">{{ user.username }}</span>
               
                 <a href="{% url 'update_profile'%}"><button class="btn btn-outline-secondary" style="color: black;"><b>Edit Profile</b></button></a>
             </div>
+            <div class="row1">
+                <!-- following -->
+                
+            </div>
             <div class="row2">
                 <span>{{ profile.get_images.count }} posts</span>
-                <span>{{ profile.get_friends.count }} friends</span>
+                <span>{{ profile.get_following.count }} following</span>
                 <span>500 following</span>
             </div>
         </div>
+        <!-- end of details -->
         <p></p>
         <p></p>
         <hr>
-        <h3>Your Friends:</h3>
-        <ul>
-            {% for friend in profile.get_friends %}
-            <li>{{ friend }}</li>
-            {% endfor %}
-        </ul>
-        <hr>
+   
        <div class="prof-display">
         {% for image in profile.get_images %}
         <div data-bs-toggle="modal" data-bs-target="#imgModal{{image.id}}">
@@ -85,6 +86,7 @@
         </div>       
         {% endfor %}
        </div>
+       <!-- end of images -->
     </div>
 </div>
 
