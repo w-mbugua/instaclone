@@ -1,11 +1,7 @@
-from json.encoder import JSONEncoder
-from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .forms import ProfileUpdateForm, NewImageForm, CommentModelForm
-from .models import Profile, Image, Like, Comment
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
+from .models import Profile, Image, Like
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from .email import send_confirm_email
@@ -33,18 +29,18 @@ def home(request):
     images.append(my_posts)
     return render(request, 'insta/home.html', {'profile': profile, 'images': images})
 
-
+@login_required
 def profile(request):
     profile = Profile.objects.get(user=request.user)
     return render(request, 'insta/profile.html', {"profile": profile})
 
-
+@login_required
 def update_profile(request):
     form = ProfileUpdateForm(request.POST, request.FILES)
 
     return render(request, 'insta/update_profile.html', {"form": form})
 
-
+@login_required
 def upload(request):
     current_user = request.user
     if request.method == 'POST':
@@ -58,7 +54,7 @@ def upload(request):
         form = NewImageForm()
     return render(request, 'insta/upload.html', {"form": form})
 
-
+@login_required
 def show_image(request, id):
     image = Image.objects.get(id=id)
     profile = Profile.objects.get(user=request.user)
@@ -103,13 +99,14 @@ def image_like(request):
         like.save()
     return redirect('home')
 
-
+@login_required
 def search_results(request):
     keyword = request.GET.get('image')
     images = Image.search_by_term(keyword)
     message = f"{keyword}".capitalize()
     return render(request, 'insta/search.html', {"message": message, "images": images})
 
+@login_required
 def follow_unfollow(request):
     if request.method == 'POST':
         my_profile = Profile.objects.get(user=request.user)

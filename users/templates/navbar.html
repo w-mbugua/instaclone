@@ -21,26 +21,27 @@
                   <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"></i></button>
                 </form>
               </div>
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'home'%}"><i class="fa fa-home fa-2x"></i>Home</a>
+            
+             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home'%}"><i class="fa fa-home fa-2x"></i>Home</a>
+              </li>
+              <li class="ms-2 nav-item">
+                  <a class="nav-link" href="{% url 'upload'%}"><i class="fa fa-plus-square fa-2x" style="height: 22px; width: 22px;"></i>Add</a>
                 </li>
                 <li class="ms-2 nav-item">
-                    <a class="nav-link" href="{% url 'upload'%}"><i class="fa fa-plus-square fa-2x" style="height: 22px; width: 22px;"></i>Add</a>
-                  </li>
-                  <li class="ms-2 nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}"><span class="material-icons">&#xE87C;</span>Profile</a>
-                  </li>
-                  <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">activity</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}">profile</a>
-                  </li> -->
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout'%}"><span class="material-icons">&#xE7C;</span>Logout</a>
-                  </li>
-                </ul>
+                  <a class="nav-link" href="{% url 'profile' %}"><span class="material-icons">&#xE87C;</span>Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout'%}"><span class="material-icons">&#xE7C;</span>Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout'%}"><span class="material-icons">&#xE7C;</span>Login</a>
+                </li>
+                {% endif %}
+              </ul>
             </div>
           </nav>
       </div>
