@@ -53,7 +53,15 @@ class Image(models.Model):
     def search_by_term(cls, search_term):
         image = cls.objects.filter(image_name__icontains=search_term)
         return image
+    
+    def save_image(self):
+        self.save()
 
+    def delete_image(self):
+        self.delete()
+
+    def update_image(self, caption):
+        self.caption = caption
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
