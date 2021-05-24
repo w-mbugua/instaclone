@@ -4,7 +4,7 @@ from .models import Image, Profile, Comment, Like, User
 
 class ImageModelTest(TestCase):
     def setUp(self):
-        self.iamge_name = 'vacay'
+        self.image_name = 'vacay'
         self.user = User(username='sam')
         self.user.save()
         self.profile = Profile(bio="Never say never", user=self.user)
@@ -22,7 +22,31 @@ class ImageModelTest(TestCase):
         new_caption = 'testing'
         self.new_img.update_image(new_caption)
         self.assertEqual(self.new_img.caption, 'testing')
+
+class ProfileModelTest(TestCase):
+    def setUp(self):
+        bio = 'here to stay'
+        user = User(username='sam')
+        user.save()
+        self.profile = Profile(bio=bio, user=user)
+
+    def test_instance(self):
+            self.assertTrue(isinstance(self.profile, Profile))
     
+    def test_profile_images(self):
+        self.assertTrue(self.profile.profile_images != 0)
+    
+class CommentModelTest(TestCase):
+    def setUp(self):
+        user = User(username='sam')
+        body = 'nice!!'
+        self.comment = Comment(user=user, body=body)
+    
+    def test_instance(self):
+        self.assertTrue(isinstance(self.comment, Comment))
+
+
+
 
 
    

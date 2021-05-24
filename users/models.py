@@ -7,7 +7,6 @@ class Profile(models.Model):
     photo = CloudinaryField('image')
     bio = models.CharField(max_length=300)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    friends = models.ManyToManyField(User, blank=True, related_name='friends')
     following = models.ManyToManyField(User, blank=True, related_name='following')
     created = models.DateTimeField(auto_now_add=True)
     
