@@ -45,7 +45,7 @@ a {
 }
 .image-header-name{
     margin-left: 1rem;
-    margin-top: 1rem;
+    margin-top: 10px;
 }
 .caption {
     display: flex;
@@ -99,6 +99,9 @@ a {
 }
 .full {
     color: red;
+}
+.fa-comment {
+    color: lightslategray;
 }
 .icons {
     display: flex;

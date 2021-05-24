@@ -66,7 +66,27 @@
                       {% endif%}
                     </div>
                     <hr>
-                    <div class="icons">
+                    <div>
+                        <div class="icons">
+
+                            <div class="likes">
+                              <form action="{% url 'like'%}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="image_id" value="{{image.id}}">
+                                <button type="submit" class="btn btn-outline-secondary btn-like">
+                                  {% if user not in image.Likes.all %}
+                                  <i class="fa fa-heart fa-2x empty"></i>
+                                  {% else %}
+                                  <i class="fa fa-heart fa-2x full"></i>
+                                  {% endif %}
+                                </button>
+                                &nbsp; 
+                              </form>
+                            </div>
+                            <div class="comments">
+                              <button  class="btn btn-outline-secondary btn-like"><a href="{% url 'show_image' image.id%}"><i class="fa fa-comment fa-2x" 7x></i></a></button>
+                            </div>
+                          </div>
                          <!-- likes -->
                          <p> <span>{{ image.count_likes }}</span> likes</p>
                     </div>

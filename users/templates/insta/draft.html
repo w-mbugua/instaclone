@@ -1,0 +1,34 @@
+<div class="card border-secondary mt-3 mb-3">
+    <div class="card-header bg-transparent border-secondary">
+     <!-- here -->
+     <a href="#"> {{ image.profile.user }}</a>
+    </div>
+
+    <div class="card-body">
+      <!-- <h5 class="card-title">Success card title</h5> -->
+       <a href="{% url 'show_image' image.id%}"></a>{% cloudinary image.img class="home-display" %}</a>
+       <div class="icons">
+
+         <div class="likes">
+           <form action="{% url 'like'%}" method="POST">
+             {% csrf_token %}
+             <input type="hidden" name="image_id" value="{{image.id}}">
+             <button type="submit" class="btn btn-outline-secondary btn-like">
+               {% if user not in image.Likes.all %}
+               <i class="fa fa-heart empty"></i>
+               {% else %}
+               <i class="fa fa-heart full"></i>
+               {% endif %}
+               {{image.count_likes}}
+             </button>
+             &nbsp; 
+           </form>
+         </div>
+         <div class="comments">
+           <a href="{% url 'show_image' image.id%}"><i class="fa fa-comment" 7x></i></a>
+         </div>
+       </div> 
+       <div class="card-footer text-muted bg-transparent border-secondary">
+     </div>
+  </div>
+  <p>end of image {{ image.image_name}}</p>
